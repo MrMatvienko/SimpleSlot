@@ -19,18 +19,18 @@ document.getElementById("spin-button").addEventListener("click", () => {
   // Запускаємо анімацію для кожного слоту
   slots.forEach((slot, index) => {
     slot.style.top = "-100px"; // Зміщуємо вгору
+    results.style.backgroundColor = "#ffffff";
+    results.textContent = "";
 
     // Після завершення анімації оновлюємо символи
     setTimeout(() => {
-      slot.style.bottom = "100px"; // Спочатку зміщуємо за межі видимості
-
       // Оновлюємо символ з попередньо згенерованого reels
       const reelIndex = Math.floor(index / 3); // Номер барабана (0, 1, 2)
       const positionIndex = index % 3; // Номер позиції на барабані (0, 1, 2)
       slot.textContent = reels[reelIndex][positionIndex]; // Оновлюємо символ у слоті
 
       setTimeout(() => {
-        slot.style.top = "34%"; // Анімуємо повернення до початкової позиції
+        slot.style.top = "25%"; // Анімуємо повернення до початкової позиції
       }, 50);
     }, 500); // Час анімації
   });
