@@ -18,7 +18,7 @@ document.getElementById("spin-button").addEventListener("click", () => {
 
   // Запускаємо анімацію для кожного слоту
   slots.forEach((slot, index) => {
-    slot.style.top = "-100px"; // Зміщуємо вгору
+    slot.style.top = "100px"; // Зміщуємо вгору
     results.style.backgroundColor = "#ffffff";
     results.textContent = "";
 
@@ -43,9 +43,9 @@ document.getElementById("spin-button").addEventListener("click", () => {
       results.textContent = "WIN";
     } else {
       results.style.backgroundColor = "#ff0000";
-      results.textContent = "Sorry, try again";
+      results.textContent = "LOSS";
     }
-  }, 1000); // Після анімації
+  }, 1000);
 });
 
 function spinReel(symbols) {
@@ -76,8 +76,8 @@ function checkWinningCombinations(reels) {
 
   for (let line of winningLines) {
     if (line.every((symbol) => symbol === line[0])) {
-      return true; // є виграш
+      return true;
     }
   }
-  return false; // немає виграшу
+  return false;
 }
