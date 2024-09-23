@@ -39,8 +39,10 @@ document.getElementById("spin-button").addEventListener("click", () => {
   setTimeout(() => {
     const isWin = checkWinningCombinations(reels);
     if (isWin) {
+      results.style.backgroundColor = "#ffff00";
       results.textContent = "WIN";
     } else {
+      results.style.backgroundColor = "#ff0000";
       results.textContent = "Sorry, try again";
     }
   }, 1000); // Після анімації

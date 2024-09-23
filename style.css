@@ -43,7 +43,9 @@ body {
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  border: 1px solid black;
+  border-radius: 30%;
+  border: 3px solid black;
+  /* background-color: #ffff00; */
 }
 
 #spin-button {
