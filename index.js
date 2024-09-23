@@ -21,6 +21,7 @@ document.getElementById("spin-button").addEventListener("click", () => {
     slot.style.top = "100px"; // Зміщуємо вгору
     results.style.backgroundColor = "#ffffff";
     results.textContent = "";
+    slot.parentNode.style.backgroundColor = "";
 
     // Після завершення анімації оновлюємо символи
     setTimeout(() => {
@@ -37,10 +38,11 @@ document.getElementById("spin-button").addEventListener("click", () => {
 
   // Після анімації перевіряємо виграш
   setTimeout(() => {
-    const isWin = checkWinningCombinations(reels);
-    if (isWin) {
+    const winningIndices = checkWinningCombinations(reels);
+    if (winningIndices.length > 0) {
       results.style.backgroundColor = "#ffff00";
       results.textContent = "WIN";
+      highlightWinningLines(winningIndices); // Додаємо підсвічування виграшних ліній
     } else {
       results.style.backgroundColor = "#ff0000";
       results.textContent = "LOSS";
@@ -74,10 +76,31 @@ function checkWinningCombinations(reels) {
     [reels[0][2], reels[1][1], reels[2][0]], // діагональ справа наліво
   ];
 
-  for (let line of winningLines) {
-    if (line.every((symbol) => symbol === line[0])) {
-      return true;
+  const winningIndices = []; // масив для зберігання виграшних індексів
+
+  // Перевіряємо кожну лінію на виграш
+  for (let i = 0; i < winningLines.length; i++) {
+    if (winningLines[i].every((symbol) => symbol === winningLines[i][0])) {
+      winningIndices.push(i); // Додаємо індекс виграшної лінії
     }
   }
-  return false;
+  return winningIndices; // Повертаємо масив виграшних індексів
+}
+function highlightWinningLines(winningIndices) {
+  const slotElements = document.querySelectorAll(".slot span");
+
+  // Масив слотів для кожної виграшної лінії
+  const lineMappings = [
+    [0, 3, 6], // верхня лінія
+    [1, 4, 7], // середня лінія
+    [2, 5, 8], // нижня лінія
+    [0, 4, 8], // діагональ зліва направо
+    [2, 4, 6], // діагональ справа наліво
+  ];
+
+  winningIndices.forEach((lineIndex) => {
+    lineMappings[lineIndex].forEach((index) => {
+      slotElements[index].parentNode.style.backgroundColor = "#ffff00"; // Жовтий фон
+    });
+  });
 }
