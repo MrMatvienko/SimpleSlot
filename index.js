@@ -10,12 +10,18 @@
 const symbols = ["🍒", "🍋", "🍉", "🍇", "🔔", "⭐", "7️⃣", "🍀"];
 
 const results = document.querySelector(".results");
+const balance = document.querySelector(".balance");
+
+let initialBalance = parseInt(balance.textContent);
+let counterBalance = initialBalance;
 
 document.getElementById("spin-button").addEventListener("click", () => {
   // Спочатку генеруємо результат спіна
   const reels = spinAllReels(symbols);
   console.log("Reels:", reels);
-
+  counterBalance -= 1;
+  console.log(counterBalance);
+  balance.textContent = counterBalance;
   const slots = document.querySelectorAll(".slot span");
 
   // Запускаємо анімацію для кожного слоту
