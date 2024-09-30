@@ -46,7 +46,7 @@ document.getElementById("spin-button").addEventListener("click", () => {
   // Спочатку генеруємо результат спіна
   const reels = spinAllReels(symbols);
   console.log("Reels:", reels);
-  counterBalance -= 1;
+  counterBalance -= startValueStake;
   console.log(counterBalance);
   balance.textContent = counterBalance;
   const slots = document.querySelectorAll(".slot span");

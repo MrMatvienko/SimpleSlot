@@ -1,5 +1,10 @@
 body {
   margin: 0 auto;
+  background-image: url(/assets/image/casino.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  width: 100%;
 }
 .title-container {
   margin: 0 auto;
@@ -22,6 +27,8 @@ body {
   border: 4px solid black;
   border-radius: 10px;
   background-color: beige;
+  box-shadow: 1px 1px 10px rgb(163, 106, 106), 0 0 1em rgb(192, 118, 48),
+    0 0 0.2em rgb(189, 185, 129);
 }
 
 .reel {
@@ -67,17 +74,19 @@ body {
   height: 30px;
   border-radius: 30%;
   border: 3px solid black;
+  background-color: rgb(165, 116, 116, 0.8);
 }
 .stake {
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  width: 110px;
+  width: 90px;
   height: 30px;
   border-radius: 30%;
   border: 3px solid black;
   overflow: hidden;
+  background-color: rgb(165, 116, 116, 0.8);
 }
 .stake-button {
   border-radius: 30%;
@@ -99,21 +108,25 @@ body {
   font-weight: bold;
   border-radius: 10px;
   border: 3px solid black;
+  background-color: white;
 }
 
 #spin-button {
   display: block;
   margin: 20px auto;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   font-size: 1.5rem;
-  background-color: #28a745;
+  background-color: #0d6421;
   color: white;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 300ms ease;
+  box-shadow: 0 0 15px rgba(238, 235, 235, 0.5),
+    0 0 25px rgba(233, 228, 228, 0.3), 0 0 35px rgba(240, 236, 236, 0.2),
+    0 0 45px rgba(235, 231, 231, 0.05);
 }
 
 #spin-button:hover {
