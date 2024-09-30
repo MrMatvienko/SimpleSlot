@@ -27,7 +27,8 @@ body {
   border: none;
   border-radius: 20px;
   background-color: rgba(223, 222, 189, 0.4);
-  box-shadow: 1px 1px 10px rgb(223, 213, 213), 0 0 4em rgb(231, 227, 223),
+  backdrop-filter: blur(2px);
+  box-shadow: 1px 1px 1px rgb(223, 213, 213), 0 0 2em rgb(231, 227, 223),
     0 0 0.2em rgb(179, 177, 167);
 }
 

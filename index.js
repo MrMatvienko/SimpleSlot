@@ -11,6 +11,16 @@
 6. Створюємо мисав виграшних ліній та винагородження за них відповідно до симоволів 
 */
 const symbols = ["🍒", "🍋", "🍉", "🍇", "🔔", "⭐", "7️⃣", "🍀"];
+const symbolMultipliers = {
+  "🍒": 2,
+  "🍋": 3,
+  "🍉": 4,
+  "🍇": 5,
+  "🔔": 6,
+  "⭐": 7,
+  "7️⃣": 10,
+  "🍀": 15,
+};
 
 const results = document.querySelector(".results");
 const balance = document.querySelector(".balance");
@@ -18,10 +28,10 @@ const stakeValue = document.getElementById("stake-value");
 const minusbtn = document.querySelector('[data-action="decrement"]');
 const plusbtn = document.querySelector('[data-action="increment"]');
 
-let initialBalance = parseInt(balance.textContent);
-let counterBalance = initialBalance;
+let initialBalance = parseInt(balance.textContent); // Використовуємо одну змінну для балансу
 let startValueStake = 1;
 const minStake = 1;
+
 function updtStartvalue() {
   stakeValue.textContent = startValueStake;
 }
@@ -46,9 +56,8 @@ document.getElementById("spin-button").addEventListener("click", () => {
   // Спочатку генеруємо результат спіна
   const reels = spinAllReels(symbols);
   console.log("Reels:", reels);
-  counterBalance -= startValueStake;
-  console.log(counterBalance);
-  balance.textContent = counterBalance;
+  initialBalance -= startValueStake; // Використовуємо одну змінну
+  balance.textContent = initialBalance;
   const slots = document.querySelectorAll(".slot span");
 
   // Запускаємо анімацію для кожного слоту
@@ -58,30 +67,40 @@ document.getElementById("spin-button").addEventListener("click", () => {
     results.textContent = "";
     slot.parentNode.style.backgroundColor = "";
 
-    // Після завершення анімації оновлюємо символи
     setTimeout(() => {
-      // Оновлюємо символ з попередньо згенерованого reels
-      const reelIndex = Math.floor(index / 3); // Номер барабана (0, 1, 2)
-      const positionIndex = index % 3; // Номер позиції на барабані (0, 1, 2)
-      slot.textContent = reels[reelIndex][positionIndex]; // Оновлюємо символ у слоті
+      const reelIndex = Math.floor(index / 3);
+      const positionIndex = index % 3;
+      slot.textContent = reels[reelIndex][positionIndex];
 
       setTimeout(() => {
-        slot.style.top = "25%"; // Анімуємо повернення до початкової позиції
+        slot.style.top = "25%";
       }, 50);
-    }, 500); // Час анімації
+    }, 500);
   });
 
-  // Після анімації перевіряємо виграш
   setTimeout(() => {
     const winningIndices = checkWinningCombinations(reels);
+    let totalWin = 0;
     if (winningIndices.length > 0) {
+      winningIndices.forEach((lineIndex) => {
+        const winningLine = getWinningLine(reels, lineIndex);
+        const firstSymbol = winningLine[0];
+
+        if (winningLine.every((symbol) => symbol === firstSymbol)) {
+          const multiplier = symbolMultipliers[firstSymbol] || 1;
+          totalWin += startValueStake * multiplier;
+        }
+      });
+
+      initialBalance += totalWin;
+      results.textContent = `WIN: ${totalWin} credits!`;
       results.style.backgroundColor = "#ffff00";
-      results.textContent = "WIN";
-      highlightWinningLines(winningIndices); // Додаємо підсвічування виграшних ліній
+      highlightWinningLines(winningIndices);
     } else {
       results.style.backgroundColor = "#ff0000";
       results.textContent = "LOSS";
     }
+    balance.textContent = initialBalance;
   }, 1000);
 });
 
@@ -89,7 +108,7 @@ function spinReel(symbols, forceSymbol = null) {
   let reel = [];
   for (let i = 0; i < 3; i++) {
     if (forceSymbol && Math.random() > 0.55) {
-      // 50% ймовірність отримати однаковий символ
+      // 55% ймовірність отримати однаковий символ
       reel.push(forceSymbol);
     } else {
       const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
@@ -101,47 +120,60 @@ function spinReel(symbols, forceSymbol = null) {
 
 function spinAllReels(symbols) {
   const reels = [];
-  const forcedSymbol = symbols[Math.floor(Math.random() * symbols.length)]; // Обираємо випадковий символ для збільшення ймовірності виграшу
+  const forcedSymbol = symbols[Math.floor(Math.random() * symbols.length)];
   for (let i = 0; i < 3; i++) {
-    reels.push(spinReel(symbols, forcedSymbol)); // Примусово встановлюємо символ для більшої частоти виграшу
+    reels.push(spinReel(symbols, forcedSymbol));
   }
   return reels;
 }
 
 function checkWinningCombinations(reels) {
   const winningLines = [
-    [reels[0][0], reels[1][0], reels[2][0]], // верхня лінія
-    [reels[0][1], reels[1][1], reels[2][1]], // середня лінія
-    [reels[0][2], reels[1][2], reels[2][2]], // нижня лінія
-    [reels[0][0], reels[1][1], reels[2][2]], // діагональ зліва направо
-    [reels[0][2], reels[1][1], reels[2][0]], // діагональ справа наліво
+    [reels[0][0], reels[1][0], reels[2][0]],
+    [reels[0][1], reels[1][1], reels[2][1]],
+    [reels[0][2], reels[1][2], reels[2][2]],
+    [reels[0][0], reels[1][1], reels[2][2]],
+    [reels[0][2], reels[1][1], reels[2][0]],
   ];
 
-  const winningIndices = []; // масив для зберігання виграшних індексів
+  const winningIndices = [];
 
-  // Перевіряємо кожну лінію на виграш
   for (let i = 0; i < winningLines.length; i++) {
     if (winningLines[i].every((symbol) => symbol === winningLines[i][0])) {
-      winningIndices.push(i); // Додаємо індекс виграшної лінії
+      winningIndices.push(i);
     }
   }
-  return winningIndices; // Повертаємо масив виграшних індексів
+  return winningIndices;
 }
+
+// Додаємо функцію getWinningLine
+function getWinningLine(reels, lineIndex) {
+  const lineMappings = [
+    [0, 3, 6], // Верхня лінія
+    [1, 4, 7], // Середня лінія
+    [2, 5, 8], // Нижня лінія
+    [0, 4, 8], // Діагональ зліва направо
+    [2, 4, 6], // Діагональ справа наліво
+  ];
+
+  return lineMappings[lineIndex].map(
+    (index) => reels[Math.floor(index / 3)][index % 3]
+  );
+}
+
 function highlightWinningLines(winningIndices) {
   const slotElements = document.querySelectorAll(".slot span");
-
-  // Масив слотів для кожної виграшної лінії
   const lineMappings = [
-    [0, 3, 6], // верхня лінія
-    [1, 4, 7], // середня лінія
-    [2, 5, 8], // нижня лінія
-    [0, 4, 8], // діагональ зліва направо
-    [2, 4, 6], // діагональ справа наліво
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
   ];
 
   winningIndices.forEach((lineIndex) => {
     lineMappings[lineIndex].forEach((index) => {
-      slotElements[index].parentNode.style.backgroundColor = "#ffff00"; // Жовтий фон
+      slotElements[index].parentNode.style.backgroundColor = "#ffff00";
     });
   });
 }
