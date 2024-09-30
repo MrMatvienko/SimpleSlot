@@ -4,7 +4,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
-  width: 100%;
+  min-height: 100vh;
 }
 .title-container {
   margin: 0 auto;
