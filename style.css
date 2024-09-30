@@ -26,7 +26,7 @@ body {
   align-items: center;
   border: 4px solid black;
   border-radius: 10px;
-  background-color: beige;
+  background-color: rgba(223, 222, 189, 0.4);
   box-shadow: 1px 1px 10px rgb(163, 106, 106), 0 0 1em rgb(192, 118, 48),
     0 0 0.2em rgb(189, 185, 129);
 }
@@ -45,7 +45,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  background-color: #b99999;
+  background-color: rgb(165, 116, 116);
   border-radius: 10px;
   margin: 5px 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
