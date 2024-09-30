@@ -6,14 +6,41 @@
 4.Підсвічуємо виграшну лінію 
 ---- 4.1 Отримуємо індекс виграшних ліній додаємо їх до масиву
 -----4.2 Проходимось по масиву та змінюємо власитивість кольору фону 
+5.Додаємо сумму балансу.
+----- 5.1 Створюємо лічильник сума ставки по кліку 
+6. Створюємо мисав виграшних ліній та винагородження за них відповідно до симоволів 
 */
 const symbols = ["🍒", "🍋", "🍉", "🍇", "🔔", "⭐", "7️⃣", "🍀"];
 
 const results = document.querySelector(".results");
 const balance = document.querySelector(".balance");
+const stakeValue = document.getElementById("stake-value");
+const minusbtn = document.querySelector('[data-action="decrement"]');
+const plusbtn = document.querySelector('[data-action="increment"]');
 
 let initialBalance = parseInt(balance.textContent);
 let counterBalance = initialBalance;
+let startValueStake = 1;
+const minStake = 1;
+function updtStartvalue() {
+  stakeValue.textContent = startValueStake;
+}
+
+minusbtn.addEventListener("click", function () {
+  if (startValueStake > minStake) {
+    startValueStake -= 1;
+    updtStartvalue();
+  }
+  if (startValueStake <= minStake) {
+    minusbtn.disabled = true;
+  }
+});
+
+plusbtn.addEventListener("click", function () {
+  startValueStake += 1;
+  updtStartvalue();
+  minusbtn.disabled = false;
+});
 
 document.getElementById("spin-button").addEventListener("click", () => {
   // Спочатку генеруємо результат спіна

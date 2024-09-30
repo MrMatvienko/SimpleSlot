@@ -68,8 +68,30 @@ body {
   border-radius: 30%;
   border: 3px solid black;
 }
+.stake {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  width: 110px;
+  height: 30px;
+  border-radius: 30%;
+  border: 3px solid black;
+  overflow: hidden;
+}
+.stake-button {
+  border-radius: 30%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 300ms ease;
+}
+.stake-button:hover,
+.stake-button:focus {
+  background: #333;
+}
 .results {
-  width: 200px;
+  width: 160px;
   height: 30px;
   display: flex;
   justify-content: center;
@@ -91,6 +113,7 @@ body {
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 300ms ease;
 }
 
 #spin-button:hover {
