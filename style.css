@@ -1,6 +1,6 @@
 body {
   margin: 0 auto;
-  background-image: url(/assets/image/casino.jpg);
+  background-image: url(assets/image/casino.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
@@ -24,8 +24,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 4px solid black;
-  border-radius: 10px;
+  border: none;
+  border-radius: 20px;
   background-color: rgba(223, 222, 189, 0.4);
   box-shadow: 1px 1px 10px rgb(223, 213, 213), 0 0 4em rgb(231, 227, 223),
     0 0 0.2em rgb(179, 177, 167);
